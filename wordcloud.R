@@ -126,7 +126,6 @@ wordcloudspiral = function (wordframe, wordscount, wordsize = 3.3,
   ## and the rotation of the word determined randomly. The function returns a 
   ## data frame containing the bottom left coordinates, width and height of 
   ## each box, the word, size of the word and an indicator of rotation.
-  
   if (wordscount > length(wordframe$word)) {
     wordscount = length(wordframe$word)
   }
