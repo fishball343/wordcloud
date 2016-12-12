@@ -1,3 +1,4 @@
+set.seed(1)
 fileConn<-file("random.txt")
 common_words = scan("commonwords.txt", what="", sep="\n")
 
