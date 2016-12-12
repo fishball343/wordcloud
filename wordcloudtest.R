@@ -51,7 +51,8 @@ test_that("wordcloudspiral, check if bounding box is largest for frequent
   expect_true(abs(spiraldf$height[1] - max(spiraldf$height)) < 0.001)
 })
 
-test_that("wordcloudspiral, check that number of words does not exceed user demands or maximum words in text file", {
+test_that("wordcloudspiral, check that number of words does not exceed user 
+          demands or maximum words in text file", {
   ## Function wordscloudspiral should return a data frame of words equal to the 
   ## request of the user or if the user request if too large, the maximum number 
   ## of unique words in the text
@@ -69,16 +70,14 @@ test_that("overlap, check that boxes in the spiral do not overlap", {
   ## Function overlap should return false for all boxes in the word cloud to 
   ## verify that no boxes in the spiral should overlap
   FONT = "Times"
-  WORDNUM = 50
+  WORDNUM = 20
   test_dtf = weight_by_count("JFK.txt")   
   spiraldf = wordcloudspiral(test_dtf, wordscount = WORDNUM, font = FONT, 
                              propRotate = 0)
-  checklist = c()
   for (ii in 1:WORDNUM){
     first_box= spiraldf[ii, ]
     box.list=split(spiraldf[-ii, ], seq(nrow(  spiraldf[-ii, ])))
-    checklist= c(checklist, overlap(first_box$x, first_box$y, first_box$width, 
+    expect_false(overlap(first_box$x, first_box$y, first_box$width, 
                                     first_box$height, box.list))
   }
-  expect_false(all(checklist))
 })
