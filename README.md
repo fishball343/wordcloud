@@ -8,6 +8,6 @@ To run my program you would need to type the following command line script. ./dr
 
 For example to create a word cloud of JFK inaugural speech containing 150 words and using the color scheme Blues typing the following command script would generate a pdf file that contains the wordcloud. 
 
-./driver.R -f JFK.txt -c Blues -n 150 -f Times -o JFK_example.pdf
+./driver.R -f JFK.txt -c Blues -n 150 -t Times -o JFK_example.pdf
 
 I have placed the above example word cloud in the repository.
