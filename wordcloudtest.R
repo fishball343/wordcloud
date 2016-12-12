@@ -67,9 +67,9 @@ test_that("wordcloudspiral, check that number of words does not exceed user
   spiraldf = wordcloudspiral(test_dtf, wordscount = 50, font = FONT, 
                              propRotate = 0)
   expect_equal(length(spiraldf$x) , 50)
-  spiraldf2 = wordcloudspiral(test_dtf, wordscount = 600, font = FONT, 
+  spiraldf2 = wordcloudspiral(random_dtf, wordscount = 600, font = FONT, 
                               propRotate = 0)
-  expect_equal(length(spiraldf2$x) , length(test_dtf$word))
+  expect_equal(length(spiraldf2$x) , length(random_dtf$word))
   randomspiraldf = wordcloudspiral(random_dtf, wordscount = 50, font = FONT, 
                              propRotate = 0)
   expect_equal(length(randomspiraldf$x) , 50)
