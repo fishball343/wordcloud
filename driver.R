@@ -24,6 +24,6 @@ num = args$numword
 color = args$color
 font = args$font
 output = args$output
-pdf('output.pdf')
+pdf(output)
 wordcloudplot(input, color, num, font)
 dev.off()
