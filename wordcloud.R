@@ -1,8 +1,7 @@
 #!/usr/bin/env Rscript
-args = commandArgs(trailingOnly = TRUE)
-FILENAME = args[1]
-NUM_WORDS = as.numeric(args[2])
-COLTHEME = args[3]
+FILENAME = "trump.txt"
+NUM_WORDS = 120
+COLTHEME = "Blues"
 
 ## initialize with 'chmod +x wordcloud.R'
 ## execute with './wordcloud.R JFK.txt 100 Blues'
@@ -15,14 +14,14 @@ FONT = "Helvetica"
 parse_txt = function(filename) {
   ## Parse_txt converts a txt file into a string.
   data = readChar(filename, file.info(filename)$size)
-  return(data)
+  return (data)
 }
 
 filter_stopword = function(text) {
   ## Filter_stopword removes stop words from a vector of words.
   stopword = c(stopwords("english"), "shall", "-", "--", "will", "can")
   text = text[!text %in% stopword]
-  text
+  return (text)
 }
 
 tokenize = function(text) {
@@ -33,7 +32,7 @@ tokenize = function(text) {
   text = gsub("( |^)-+|-+( |$)", "\\1", gsub("[^[:alpha:]’'-]", " ", text))
   text = tolower(text)
   text = strsplit(text, "\\s+")[[1]]
-  text
+  return(text)
 }
 
 uniquify = function(stemed_text) {
@@ -61,7 +60,7 @@ stem = function(tokened_data) {
     dtf[, "word"][missing_index] = paste(substr(stem, 1, nchar(stem) - 1), "y", 
                                          sep = "")
   }
-  return(dtf)
+  return (dtf)
 }
   
 weight_by_count = function(filename) {
@@ -76,7 +75,7 @@ weight_by_count = function(filename) {
   wordcounts = uniquify(stem_data)
   wordcounts$count = as.numeric(wordcounts$count)
   wordcounts = wordcounts[order(wordcounts$count, decreasing = TRUE), ]
-  wordcounts
+  return (wordcounts)
 }
 
 bounding_box = function(text, size, font) {
@@ -100,17 +99,17 @@ overlap = function (x1, y1, width, height, boxes) {
   ## boxes which also contain values of their respective x1, y1, width and 
   ## height. 
   if (length(boxes) == 0) {
-    return(FALSE)
+    return (FALSE)
   }
-  for (i in 1:length(boxes)) {
-    box_bound = boxes[[i]]
+  for (box in 1:length(boxes)) {
+    box_bound = boxes[[box]]
     x2 = box_bound[1]
     y2 = box_bound[2]
     width2 = box_bound[3]
     height2 = box_bound[4]
     if (!(x1 >= x2 + width2 ||
           y1 >= y2 + height2 || y1 + height <= y2 || x1 + width <= x2)) {
-      return(TRUE)
+      return (TRUE)
     }
   }
   return (FALSE)
@@ -148,21 +147,15 @@ wordcloudspiral = function (wordframe, wordscount, wordsize = 3.3,
       height = width
       width = tmp
     }
-    isOverlaped = TRUE
-    while (isOverlaped) {
-      if (!overlap(x1, y1, width, height, bounding_boxes)) {
-        bounding_boxes[[length(bounding_boxes) + 1]] = c(x1, y1, width, height,
-                                                         size[i], isRotated)
-        isOverlaped = FALSE
-      }
-      else {
-        theta = theta + thetaStep
-        rads = rads + rStep * thetaStep / (2 * pi)
-        x1 = 0 + rads * cos(theta)
-        y1 = 0 + rads * sin(theta)
-      }
+    while (overlap(x1, y1, width, height, bounding_boxes)) {
+      theta = theta + thetaStep
+      rads = rads + rStep * thetaStep / (2 * pi)
+      x1 = 0 + rads * cos(theta)
+      y1 = 0 + rads * sin(theta)
     }
-  }
+    bounding_boxes[[length(bounding_boxes) + 1]] = c(x1, y1, width, height,
+                                                         size[i], isRotated)
+    }
   spiraldata = as.data.frame(matrix(
     unlist(bounding_boxes),
     nrow = length(bounding_boxes),
@@ -200,6 +193,4 @@ wordcloudplot = function(text, coltheme, numwords, font) {
   }
 }
 
-pdf('file.pdf')
 wordcloudplot(FILENAME, COLTHEME, NUM_WORDS, FONT)
-dev.off()
