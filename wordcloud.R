@@ -1,15 +1,5 @@
-#!/usr/bin/env Rscript
-FILENAME = "trump.txt"
-NUM_WORDS = 120
-COLTHEME = "Blues"
-
-## initialize with 'chmod +x wordcloud.R'
-## execute with './wordcloud.R JFK.txt 100 Blues'
-
 library(tm)
 library(RColorBrewer)
-
-FONT = "Helvetica"
 
 parse_txt = function(filename) {
   ## Parse_txt converts a txt file into a string.
@@ -192,5 +182,3 @@ wordcloudplot = function(text, coltheme, numwords, font) {
     )
   }
 }
-
-wordcloudplot(FILENAME, COLTHEME, NUM_WORDS, FONT)
