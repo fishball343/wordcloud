@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-suppressPackageStartupMessages(library(argparse))
+library(argparse)
 source("wordcloud.R")
 
 parser <- ArgumentParser()
@@ -15,10 +15,6 @@ parser$add_argument("-t", "--font", type = "character", default = "Times",
 parser$add_argument("-o", "--output", type = "character", default = "file.pdf", 
                     help = "PDF file of wordcloud plot")
 args <- parser$parse_args()
-isInFile <- grepl("\\.txt$", args$input)
-if (!isInFile) {  
-  write("Input is not a text file", stderr()) 
-}
 input = args$input
 num = args$numword          
 color = args$color
