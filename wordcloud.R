@@ -119,17 +119,17 @@ wordcloudspiral = function (wordframe, wordscount, wordsize = 3.3,
     wordscount = length(wordframe$word)
   }
   words = wordframe$word[1:wordscount]
-  freq = wordframe$count[1:wordscount]
+  count = wordframe$count[1:wordscount]
   thetaStep = 0.1
   rStep = 0.8
-  size = wordsize * freq / max(freq) + 0.5
+  size = wordsize * count / max(count) + 0.4
   bounding_boxes = list()
   for (i in 1:length(words)) {
     isRotated = rbinom(1, 1, propRotate)
     rads = 0
-    theta = runif(1, 0, 2 * pi)
     x1 = 0
     y1 = 0
+    theta = runif(1, 0, 2 * pi)
     width = bounding_box(words[i], size[i], font = font)[1]
     height = bounding_box(words[i], size[i], font = font)[2]
     if (isRotated) {
