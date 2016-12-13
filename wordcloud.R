@@ -29,8 +29,7 @@ uniquify = function(stemed_text) {
   ## Uniquify takes a data frame of words and removes all duplicated words by
   ## aggregating their occurence. It returns a dataframe of the word and the new
   ## counts/frequencies. 
-  unique = aggregate(stemed_text$count, by = list(as.factor(stemed_text$word)), 
-                     sum)
+  unique = aggregate(stemed_text$count, by = list(stemed_text$word), sum)
   colnames(unique) = c("word", "count")
   return (unique)
 }
